@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f8f8;
+}
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  padding: 20px 25px; /* top & bottom = 20px, left & right = 25px */
+}
+
+.page .page-heading {
+  font-size: 42px;
+  font-weight: 600;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.page .page-contant {
+  width: 100%;
+}
+
+.page .page-contant .card {
+  margin-top: 10px;
+  height: 100%;
+}
+
+.page .page-contant .card .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page .page-contant .card .card-body .card-heading {
+  font-size: 22px;
+  line-height: 0.5;
+  font-weight: 600;
+  color: #6f6767;
+  margin-bottom: 20px;
+}
+
+.special-form-card {
+  max-height: 227px !important;
+}
+
+.form-actions {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.margin-left-2x {
+  margin-left: 15px;
+}
