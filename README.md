@@ -1,6 +1,6 @@
 # CRUD---Javascript-HTML5-CSS3
 
-Live Demo: [here](https://muhammadmoiz200099.github.io/CRUD---Javascript-HTML5-CSS3/)
+Live Demo: [here](https://muhammad-moiz-siddique.github.io/CRUD---Javascript-HTML5-CSS3/)
 
 ## App includes CRUD OPERATION
  * Insert
