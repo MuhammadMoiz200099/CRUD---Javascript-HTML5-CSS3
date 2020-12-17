@@ -104,7 +104,6 @@ function updateButtonPress() {
         name: document.getElementById("nameField").value,
         age: Number(document.getElementById("ageField").value),
       };
-      console.log(obj)
       return obj;
     }
     return data;
