@@ -1,3 +1,5 @@
+let edit_record_id = -1;
+
 window.onload = function loadScreen() {
   document.getElementById("edit-heading").style.display = "none";
   document.getElementById("edit-btn").style.display = "none";
@@ -17,12 +19,10 @@ function loadDataFromLocalStorage() {
                 <th scope="row">${idx + 1}</th>
                 <td>${data.name}</td>
                 <td>${data.age}</td>
-                <td><button onclick="updateDataFromLocalStorage('${
-                  data.record_id
-                }')" class="btn btn-info">Edit</button></td>
-                <td><button data-toggle="modal" data-target="#deleteModalCenter" onclick="deleteDataFromLocalStorage('${
-                  data.record_id
-                }')" class="btn btn-danger">Delete</button></td>
+                <td><button onclick="updateDataFromLocalStorage('${data.record_id
+        }')" class="btn btn-info">Edit</button></td>
+                <td><button data-toggle="modal" data-target="#deleteModalCenter" onclick="deleteDataFromLocalStorage('${data.record_id
+        }')" class="btn btn-danger">Delete</button></td>
             </tr>
           `;
     });
@@ -85,36 +85,41 @@ function deleteDataFromLocalStorage(records_id) {
   });
 }
 
-function updateDataFromLocalStorage(records_id) {
+function updateDataFromLocalStorage(rcd_id) {
   displayNoneInsertMarkup();
   let tableData = JSON.parse(localStorage.getItem("crudtable")) || [];
   const filterRecord = tableData.filter(
-    ({ record_id }) => record_id === records_id
+    ({ record_id }) => record_id === rcd_id
   );
   updateFields(filterRecord[0]);
-  $("#edit-btn").on("click", function () {
-    tableData = tableData.map((data) => {
-      if (data.record_id === records_id) {
-        const obj = {
-          record_id: data.record_id,
-          name: document.getElementById("nameField").value,
-          age: Number(document.getElementById("ageField").value),
-        };
-        return obj;
-      }
-      return data;
-    });
-    localStorage.setItem("crudtable", JSON.stringify(tableData));
-    loadDataFromLocalStorage();
-    displayNoneEditMarkup();
-    emptyFieldBox();
-    showSnakeBar("Successfully updated the Record", "success", 1500);
+  edit_record_id = rcd_id;
+}
+
+function updateButtonPress() {
+  let tableData = JSON.parse(localStorage.getItem("crudtable")) || [];
+  tableData = tableData.map((data) => {
+    if (data.record_id === edit_record_id) {
+      const obj = {
+        record_id: data.record_id,
+        name: document.getElementById("nameField").value,
+        age: Number(document.getElementById("ageField").value),
+      };
+      console.log(obj)
+      return obj;
+    }
+    return data;
   });
-  $("#edit-cnl-btn").on("click", function () {
-    displayNoneEditMarkup();
-    emptyFieldBox();
-    showSnakeBar("Cancelled updating the Record", "cancelled", 1500);
-  });
+  localStorage.setItem("crudtable", JSON.stringify(tableData));
+  loadDataFromLocalStorage();
+  displayNoneEditMarkup();
+  emptyFieldBox();
+  showSnakeBar("Successfully updated the Record", "success", 1500);
+}
+
+function updateCancelButton() {
+  displayNoneEditMarkup();
+  emptyFieldBox();
+  showSnakeBar("Cancelled updating the Record", "cancelled", 1500);
 }
 
 function emptyFieldBox() {
@@ -145,23 +150,22 @@ function displayNoneEditMarkup() {
 
 function showSnakeBar(msg, type, interval) {
   var snackbar = document.getElementById("snackbar");
-  snackbar.innerHTML = `<span>${msg}</span> <button style="margin-left: 10px;" class="btn ${
-    type === "success"
-      ? "btn-outline-success"
-      : type === "cancelled"
+  snackbar.innerHTML = `<span>${msg}</span> <button style="margin-left: 10px;" class="btn ${type === "success"
+    ? "btn-outline-success"
+    : type === "cancelled"
       ? "btn-outline-info"
       : type === "error"
-      ? "btn-outline-danger"
-      : "btn-outline-warning"
-  }"> ${type.toUpperCase()} </button>`;
+        ? "btn-outline-danger"
+        : "btn-outline-warning"
+    }"> ${type.toUpperCase()} </button>`;
   snackbar.style.color =
     type === "success"
       ? "green"
       : type === "cancelled"
-      ? "#007bff"
-      : type === "error"
-      ? "red"
-      : "#ffc107";
+        ? "#007bff"
+        : type === "error"
+          ? "red"
+          : "#ffc107";
   snackbar.className = "show";
   setTimeout(function () {
     snackbar.className = snackbar.className.replace("show", "");
